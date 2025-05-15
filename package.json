@@ -1,0 +1,77 @@
+{
+  "name": "kubricate-app-stacks",
+  "type": "module",
+  "version": "0.0.12",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/dts/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/dts/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "src",
+    "package.json"
+  ],
+  "scripts": {
+    "kubricate": "kubricate",
+    "kbr": "kbr",
+    "husky": "run-s format check",
+    "check": "tsc -b tsconfig.json",
+    "check:watch": "tsc -b tsconfig.json -w",
+    "release": "release-it",
+    "format": "prettier --write src",
+    "dev": "tsc -b tsconfig.build.json -w",
+    "build": "bun format && bun build-esm && bun build-cjs && bun build-annotate",
+    "build-esm": "tsc -b tsconfig.build.json",
+    "build-cjs": "babel dist/esm --plugins @babel/transform-export-namespace-from --plugins @babel/transform-modules-commonjs --out-dir dist/cjs --source-maps",
+    "build-annotate": "babel dist --plugins annotate-pure-calls --out-dir dist --source-maps",
+    "prepublishOnly": "bun scripts/remove-type-key.ts",
+    "postpublish": "git checkout -- package.json",
+    "upgrade-deps": "bunx taze --interactive",
+    "check-deps": "bunx taze",
+    "dry-run": "kubectl apply --dry-run=client",
+    "generate": "bun run build && bun kbr generate --root examples",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.27.0",
+    "@babel/core": "^7.26.10",
+    "@babel/plugin-transform-export-namespace-from": "^7.25.9",
+    "@babel/plugin-transform-modules-commonjs": "^7.26.3",
+    "@kubernetes-models/base": "^5.0.1",
+    "@types/bun": "latest",
+    "babel-plugin-annotate-pure-calls": "^0.4.0",
+    "husky": "^9.1.7",
+    "kubricate": "^0.19.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.5.3",
+    "release-it": "^17.11.0",
+    "ts-node": "^10.9.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thaitype/kubricate-app-stacks.git"
+  },
+  "homepage": "https://github.com/thaitype/kubricate-app-stacks",
+  "dependencies": {
+    "@kubernetes-models/cert-manager": "^4.4.2",
+    "@kubernetes-models/contour": "^4.3.2",
+    "@kubricate/core": "^0.19.0",
+    "@kubricate/plugin-kubernetes": "^0.19.0",
+    "@kubricate/plugin-env": "^0.19.0",
+    "@kubricate/stacks": "^0.18.0",
+    "@kubricate/toolkit": "^0.6.1",
+    "kubernetes-models": "^4.4.2",
+    "zod": "^3.24.2"
+  }
+}
