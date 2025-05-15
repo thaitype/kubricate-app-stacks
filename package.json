@@ -25,7 +25,6 @@
     "husky": "run-s format check",
     "check": "tsc -b tsconfig.json",
     "check:watch": "tsc -b tsconfig.json -w",
-    "release": "release-it",
     "format": "prettier --write src",
     "dev": "tsc -b tsconfig.build.json -w",
     "build": "bun format && bun build-esm && bun build-cjs && bun build-annotate",
@@ -38,6 +37,7 @@
     "check-deps": "bunx taze",
     "dry-run": "kubectl apply --dry-run=client",
     "generate": "bun run build && bun kbr generate --root examples",
+    "release": "run-s build && changeset version && changeset publish",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -45,6 +45,7 @@
     "@babel/core": "^7.26.10",
     "@babel/plugin-transform-export-namespace-from": "^7.25.9",
     "@babel/plugin-transform-modules-commonjs": "^7.26.3",
+    "@changesets/cli": "^2.29.4",
     "@kubernetes-models/base": "^5.0.1",
     "@types/bun": "latest",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
@@ -60,16 +61,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thaitype/kubricate-app-stacks.git"
+    "url": "git+https://github.com/thaitype/kubricate-app-stacks.git"
   },
   "homepage": "https://github.com/thaitype/kubricate-app-stacks",
   "dependencies": {
     "@kubernetes-models/cert-manager": "^4.4.2",
     "@kubernetes-models/contour": "^4.3.2",
-    "@kubricate/core": "^0.19.0",
+    "@kubricate/core": "^0.19.1",
     "@kubricate/plugin-kubernetes": "^0.19.0",
     "@kubricate/plugin-env": "^0.19.0",
-    "@kubricate/stacks": "^0.18.0",
+    "@kubricate/stacks": "^0.19.1",
     "@kubricate/toolkit": "^0.6.1",
     "kubernetes-models": "^4.4.2",
     "zod": "^3.24.2"

@@ -182,4 +182,3 @@ export const AppStack = createStack('AppStack', (data: IAppStack) => {
       },
     });
 });
-
